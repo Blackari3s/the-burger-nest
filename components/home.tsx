@@ -73,13 +73,6 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
                 </button>
               ))}
             </div>
-            <button
-              type="button"
-              onClick={openOrder}
-              className="hidden h-11 items-center rounded-full bg-ember px-4 text-sm font-semibold text-cream md:inline-flex"
-            >
-              {lines.length > 0 ? `${text.viewOrder} · ${formatMoney(total, lang)}` : text.order}
-            </button>
           </nav>
         </div>
       </header>
@@ -114,7 +107,7 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10 md:bg-gradient-to-r md:from-ink md:via-ink/75 md:to-ink/10" />
-          <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4rem)] max-w-6xl flex-col justify-end px-5 pb-28 pt-16 text-cream md:justify-center md:px-8 md:pb-16">
+          <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4rem)] max-w-6xl flex-col justify-end px-5 pb-16 pt-16 text-cream md:justify-center md:px-8 md:pb-16">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">{text.eyebrow}</p>
             <h1 className="mt-3 max-w-xl font-display text-5xl leading-[0.95] md:text-7xl">{text.heroTitle}</h1>
             <p className="mt-4 max-w-md text-lg leading-7 text-cream/90">{text.heroLead}</p>
@@ -220,7 +213,7 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
         </section>
 
         <section id="visit" className="scroll-mt-20 bg-ink text-cream">
-          <div className="mx-auto grid max-w-6xl gap-8 px-5 pb-28 pt-14 md:grid-cols-2 md:px-8 md:pb-14">
+          <div className="mx-auto grid max-w-6xl gap-8 px-5 py-14 md:grid-cols-2 md:px-8">
             <div>
               <h2 className="font-display text-4xl md:text-5xl">{text.visit}</h2>
               <p className="mt-4 max-w-md text-sm leading-6 text-cream/80">{text.about}</p>
@@ -282,19 +275,22 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
             </a>
           </div>
         </div>
-        <p className="mx-auto max-w-6xl px-5 pb-24 text-xs text-ink-soft md:pb-8">{text.footer}</p>
+        <p className="mx-auto max-w-6xl px-5 pb-8 text-xs text-ink-soft">{text.footer}</p>
       </footer>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden">
+      {lines.length > 0 && !orderOpen && !editor ? (
         <button
           type="button"
           onClick={openOrder}
-          className="flex h-12 w-full items-center justify-between rounded-full bg-ember px-5 text-sm font-semibold text-cream"
+          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 flex h-14 items-center gap-3 rounded-full bg-ember px-4 text-sm font-semibold text-cream shadow-lg"
+          aria-label={`${text.viewOrder}, ${formatMoney(total, lang)}`}
         >
-          <span>{lines.length > 0 ? text.viewOrder : text.order}</span>
-          <span>{lines.length > 0 ? formatMoney(total, lang) : text.seeMenu}</span>
+          <span className="flex h-8 min-w-8 items-center justify-center rounded-full bg-ink px-2 text-xs">
+            {lines.reduce((count, line) => count + line.quantity, 0)}
+          </span>
+          <span>{formatMoney(total, lang)}</span>
         </button>
-      </div>
+      ) : null}
 
       {editingItem ? (
       <ItemSheet
