@@ -42,7 +42,17 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
     <>
       <header className="sticky top-0 z-40 border-b border-line/80 bg-cream/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4">
-          <a href="#top" className="flex min-w-0 items-center gap-2">
+          <a
+            href="/"
+            className="flex min-w-0 items-center gap-2"
+            onClick={(event) => {
+              if (window.location.pathname !== "/") return;
+              event.preventDefault();
+              const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+              window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+              window.history.replaceState(null, "", "/");
+            }}
+          >
             <Image src="/brand/logo.png" alt="" width={40} height={40} className="h-10 w-10 rounded-lg" />
             <span className="truncate font-display text-xl leading-none">{site.name}</span>
           </a>
@@ -82,14 +92,14 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
             muted
             loop
             playsInline
-            poster="/hero/poster.jpg"
+            poster="/hero/poster.jpg?v=2"
             aria-label={
               lang === "es"
                 ? "Hamburguesa, bistec de puerco y alitas girando en una mesa"
                 : "A hamburger, pork steak, and wings turning on a lazy susan"
             }
           >
-            <source src="/hero/lazy-susan.mp4" type="video/mp4" />
+            <source src="/hero/lazy-susan.mp4?v=2" type="video/mp4" />
           </video>
           <Image
             src="/hero/poster.jpg"
