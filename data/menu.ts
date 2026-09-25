@@ -598,7 +598,7 @@ export const menu: MenuItem[] = [
     category: "sides",
     name: t("Fries", "Papas fritas"),
     description: t("A side of crispy fries.", "Una orden de papas fritas."),
-    image: "/menu/fries.png",
+    image: "/menu/fries.jpg",
     imageAlt: t("A side of crispy french fries", "Una orden de papas fritas crujientes"),
     fromPrice: 700,
     price: 700,
@@ -612,7 +612,7 @@ export const menu: MenuItem[] = [
       "Fries with cheese and bacon.",
       "Papas con queso y tocino.",
     ),
-    image: "/menu/fries.png",
+    image: "/menu/fries.jpg",
     imageAlt: t(
       "Crispy french fries, the side that gets cheese and bacon",
       "Papas fritas crujientes, la orden con queso y tocino",
