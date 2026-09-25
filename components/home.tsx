@@ -5,14 +5,13 @@ import { useState } from "react";
 import { copy } from "@/data/copy";
 import { categories, menu, signatureIds, type Lang } from "@/data/menu";
 import { hourLines, site } from "@/data/site";
-import { persistLang } from "@/lib/locale";
 import { cartCents, formatMoney, type CartLine } from "@/lib/order";
 import { ItemSheet } from "@/components/item-sheet";
 import { OrderSheet } from "@/components/order-sheet";
 import type { SquareConfig } from "@/components/square-pay";
 
 export function Home({ initialLang, square }: { initialLang: Lang; square: SquareConfig }) {
-  const [lang, setLang] = useState<Lang>(initialLang);
+  const lang = initialLang;
   const [lines, setLines] = useState<CartLine[]>([]);
   const [editor, setEditor] = useState<{ itemId: string; line?: CartLine } | null>(null);
   const [orderOpen, setOrderOpen] = useState(false);
@@ -22,11 +21,6 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
   const signatures = signatureIds
     .map((id) => menu.find((item) => item.id === id))
     .filter((item) => item !== undefined);
-
-  function chooseLang(next: Lang) {
-    setLang(next);
-    persistLang(next);
-  }
 
   function openOrder() {
     setEditor(null);
@@ -56,31 +50,16 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
             <Image src="/brand/logo.png" alt="" width={40} height={40} className="h-10 w-10 rounded-lg" />
             <span className="truncate font-display text-xl leading-none">{site.name}</span>
           </a>
-          <nav className="ml-auto flex items-center gap-2" aria-label={text.language}>
-            <a href={`tel:${site.phoneTel}`} className="hidden h-11 items-center rounded-full px-3 text-sm sm:inline-flex">
-              {site.phoneDisplay}
-            </a>
-            <div className="flex rounded-full border border-line p-1">
-              {(["en", "es"] as const).map((option) => (
-                <button
-                  key={option}
-                  type="button"
-                  aria-pressed={lang === option}
-                  onClick={() => chooseLang(option)}
-                  className={`h-9 rounded-full px-3 text-xs font-semibold ${lang === option ? "bg-ink text-cream" : ""}`}
-                >
-                  {option.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </nav>
+          <a href={`tel:${site.phoneTel}`} className="ml-auto hidden h-11 items-center rounded-full px-3 text-sm sm:inline-flex">
+            {site.phoneDisplay}
+          </a>
         </div>
       </header>
 
       <main id="top">
-        <section className="relative isolate min-h-[calc(100svh-4rem)]">
+        <section className="relative isolate min-h-[calc((100svh-4rem)*0.7)] md:min-h-[calc(100svh-4rem)]">
           <video
-            className="absolute inset-0 h-full w-full object-cover object-[72%_center] motion-reduce:hidden"
+            className="absolute inset-0 h-full w-full object-cover object-[78%_18%] motion-reduce:hidden md:object-[72%_center]"
             autoPlay
             muted
             loop
@@ -103,11 +82,11 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
             }
             fill
             priority
-            className="hidden object-cover object-[72%_center] motion-reduce:block"
+            className="hidden object-cover object-[78%_18%] motion-reduce:block md:object-[72%_center]"
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10 md:bg-gradient-to-r md:from-ink md:via-ink/75 md:to-ink/10" />
-          <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4rem)] max-w-6xl flex-col justify-end px-5 pb-16 pt-16 text-cream md:justify-center md:px-8 md:pb-16">
+          <div className="relative z-10 mx-auto flex min-h-[calc((100svh-4rem)*0.7)] max-w-6xl flex-col justify-end px-5 pb-8 pt-8 text-cream md:min-h-[calc(100svh-4rem)] md:justify-center md:px-8 md:pb-16 md:pt-16">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">{text.eyebrow}</p>
             <h1 className="mt-3 max-w-xl font-display text-5xl leading-[0.95] md:text-7xl">{text.heroTitle}</h1>
             <p className="mt-4 max-w-md text-lg leading-7 text-cream/90">{text.heroLead}</p>
@@ -152,7 +131,7 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
         <section id="menu" className="scroll-mt-20 mx-auto max-w-6xl px-4 pb-16">
           <div className="sticky top-16 z-30 -mx-4 border-b border-line/80 bg-cream/95 px-4 py-3 backdrop-blur">
             <h2 className="sr-only">{text.menu}</h2>
-            <div className="flex gap-2 overflow-x-auto">
+            <div className="scrollbar-none flex gap-2 overflow-x-auto">
               {categories.map((category) => (
                 <a
                   key={category.id}

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Fraunces, Outfit } from "next/font/google";
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import "./globals.css";
 import { site, siteUrl } from "@/data/site";
+import { langFromAccept } from "@/lib/locale";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -40,8 +41,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const jar = await cookies();
-  const lang = jar.get("bn-lang")?.value === "es" ? "es" : "en";
+  const lang = langFromAccept((await headers()).get("accept-language"));
 
   return (
     <html lang={lang} className={`${outfit.variable} ${fraunces.variable} h-full antialiased`}>

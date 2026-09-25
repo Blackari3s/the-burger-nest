@@ -1,7 +1,7 @@
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import { Home } from "@/components/home";
-import type { Lang } from "@/data/menu";
 import { buildJsonLd } from "@/lib/schema";
+import { langFromAccept } from "@/lib/locale";
 import type { SquareConfig } from "@/components/square-pay";
 
 export const dynamic = "force-dynamic";
@@ -19,8 +19,7 @@ function squareConfig(): SquareConfig {
 }
 
 export default async function Page() {
-  const jar = await cookies();
-  const lang: Lang = jar.get("bn-lang")?.value === "es" ? "es" : "en";
+  const lang = langFromAccept((await headers()).get("accept-language"));
   const jsonLd = buildJsonLd();
 
   return (
