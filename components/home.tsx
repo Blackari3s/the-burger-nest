@@ -76,16 +76,31 @@ export function Home({ initialLang, square }: { initialLang: Lang; square: Squar
 
       <main id="top">
         <section className="relative isolate min-h-[calc(100svh-4rem)]">
+          <video
+            className="absolute inset-0 h-full w-full object-cover object-[72%_center] motion-reduce:hidden"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/hero/poster.jpg"
+            aria-label={
+              lang === "es"
+                ? "Hamburguesa, bistec de puerco y alitas girando en una mesa"
+                : "A hamburger, pork steak, and wings turning on a lazy susan"
+            }
+          >
+            <source src="/hero/lazy-susan.mp4" type="video/mp4" />
+          </video>
           <Image
-            src="/menu/double-combo.jpeg"
+            src="/hero/poster.jpg"
             alt={
               lang === "es"
-                ? "Hamburguesa doble con tocino, queso y papas fritas"
-                : "Double cheeseburger with bacon, cheese, and fries"
+                ? "Hamburguesa, bistec de puerco y alitas en una mesa"
+                : "A hamburger, pork steak, and wings on a lazy susan"
             }
             fill
             priority
-            className="object-cover object-[center_35%]"
+            className="hidden object-cover object-[72%_center] motion-reduce:block"
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10 md:bg-gradient-to-r md:from-ink md:via-ink/75 md:to-ink/10" />
